@@ -1,0 +1,6 @@
+loadkernel=load mmc 0:1 0x82000000 vmlinuz-5.10.168-ti-r71
+loadfdt=load mmc 0:1 0x88000000 am335x-boneblack.dtb
+loadinitrd=load mmc 0:1 0x90000000 uinitrd
+bootargs=console=ttyS0,115200 root=/dev/mmcblk0p2 rw
+bootsys=bootz 0x82000000 0x90000000 0x88000000
+uenvcmd=run loadkernel;run loadfdt;run loadinitrd;run bootsys
