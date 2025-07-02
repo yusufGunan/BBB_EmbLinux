@@ -1,0 +1,28 @@
+#!/bin/sh
+echo "Initial RAM file system process..."
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev
+echo "System base mount process(proc, sys, dev) completed."
+
+ROOT_DEVICE=$(cat /proc/cmdline | sed -n 's/.*root=\([^ ]*\).*/\1/p')
+if [ -z "$ROOT_DEVICE"]; then
+	echo "Root device not specified in kernel parameters."
+	exec /bin/sh
+fi
+
+echo "Mounting root device: $ROOT_DEVICE"
+
+mkdir -p /newroot
+mount "$ROOT_DEVICE" /newroot
+
+if [ $? -ne 0 ]; then
+	echo "Failed to mount root device: $ROOT_DEVICE"
+	exec /bin/sh
+fi
+
+while [! -e "$ROOT_DEVICE" ]; do
+	echo "Root device $ROOT_DEVICE not available, waiting..."
+done
+
+exec switch_root /newroot /sbin/init

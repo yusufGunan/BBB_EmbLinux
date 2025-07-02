@@ -1,0 +1,9 @@
+initramfs/bin/*
+initramfs/sbin/*
+initramfs/usr/bin/*
+initramfs/usr/sbin/*
+rootfs/bin/*
+rootfs/sbin/*
+rootfs/usr/bin/*
+rootfs/usr/sbin/*
+rootfs/boot/dtbs/*

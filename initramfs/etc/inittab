@@ -1,0 +1,3 @@
+::sysinit:/bin/mount -a
+::sysinit:/bin/hostname -F /etc/hostname
+::respawn:/bin/cttyhack /bin/ash
